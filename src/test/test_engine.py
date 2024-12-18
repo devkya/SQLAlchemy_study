@@ -1,5 +1,6 @@
 from loguru import logger
 from sqlalchemy import text
+from sqlalchemy.orm import Session
 
 
 def test_connect(engine):
@@ -22,8 +23,9 @@ def test_commit(engine):
         assert rows[1].x == 2
         assert rows[2].x == 3
 
-def test_session(engine):
-    """
-    https://docs.sqlalchemy.org/en/20/tutorial/dbapi_transactions.html
-    """
-    pass
+
+def test_session(session, create_xy_data):
+    query = text("SELECT x, y FROM test01 WHERE y > :y ORDER BY x, y")
+    result = session.execute(query, {"y": 2})
+    rows = result.fetchall()
+    logger.info(rows)
