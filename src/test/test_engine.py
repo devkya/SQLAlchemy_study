@@ -29,3 +29,5 @@ def test_session(session, create_xy_data):
     result = session.execute(query, {"y": 2})
     rows = result.fetchall()
     logger.info(rows)
+
+# TODO: https://docs.sqlalchemy.org/en/20/tutorial/dbapi_transactions.html
